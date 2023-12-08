@@ -10,20 +10,29 @@ LDFLAGS = -L/path/to/jsoncpp/lib -ljsoncpp
 # Source files
 SOURCES = main.cpp src/graph.cpp
 
+# Object files directory
+OBJDIR = bin
+
 # Object files
-OBJECTS = $(SOURCES:.cpp=.o)
+OBJECTS = $(OBJDIR)/main.o $(OBJDIR)/graph.o
 
 # Executable
-EXECUTABLE = tes
+EXECUTABLE = main
 
 # Targets
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(EXECUTABLE) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)
 
-%.o: %.cpp
+$(OBJDIR)/main.o: main.cpp | $(OBJDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+$(OBJDIR)/graph.o: src/graph.cpp | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
+	rm -rf $(OBJDIR) $(EXECUTABLE)
