@@ -131,11 +131,13 @@ bool readMarketDataFromJson(const string& filename, MarketGraph& marketGraph) {
 
     Json::parseFromStream(reader, file, &root, nullptr);
 
+    // Check if the required fields are present
     if (!root.isMember("markets") || !root.isMember("distances")) {
         cerr << "Invalid JSON format. Missing 'markets' or 'distances' field." << endl;
         return false;
     }
 
+    // Read markets
     Json::Value marketsJson = root["markets"];
     for (const auto& market : marketsJson) {
         if (!market.isMember("name")) {
@@ -146,6 +148,7 @@ bool readMarketDataFromJson(const string& filename, MarketGraph& marketGraph) {
         addMarket(&marketGraph, name.c_str());
     }
 
+    // Read distances
     Json::Value distancesJson = root["distances"];
     for (int i = 0; i < marketGraph.numMarkets; ++i) {
         for (int j = 0; j < marketGraph.numMarkets; ++j) {
