@@ -1,4 +1,4 @@
-#include "graph.hpp"
+#include "src/graph.hpp"
 
 int main() {
     // Create a market graph
@@ -6,7 +6,7 @@ int main() {
     marketGraph.numMarkets = 0;
 
     // Read market data from JSON file
-    if (!readMarketDataFromJson("data.json", marketGraph)) {
+    if (!readMarketDataFromJson("src/data.json", marketGraph)) {
         cerr << "Failed to read market data from JSON." << endl;
         return 1;
     }
