@@ -1,125 +1,25 @@
 #include "graph.hpp"
 
-
-int findMarketIndex(const MarketGraph* graph, const char* name) {
-    for (int i = 0; i < graph->numMarkets; ++i) {
-        if (strcmp(graph->markets[i].name, name) == 0) {
+int findNationIndex(Graph* graph, const string& country) {
+    for (int i = 0; i < graph->index; ++i) {
+        if (graph->nations[i].country == country) {
             return i;
         }
     }
-    return -1;
+    return -1; // Nation not found
 }
 
-void addMarket(MarketGraph* graph, const char* name) {
-    if (graph->numMarkets < MAX_MARKETS) {
-        strcpy(graph->markets[graph->numMarkets].name, name);
-        ++graph->numMarkets;
+void addNation(Graph* graph, string& country, string& name) {
+    if (graph->index < MAX) {
+        graph->nations[graph->index].country = country;
+        graph->nations[graph->index].name = name;
+        ++graph->index;
     } else {
-        printf("Max limit of markets reached.\n");
+        cout << "Max limit of nations reached." << endl;
     }
 }
 
-void addDistance(MarketGraph* graph, const char* name1, const char* name2, int distance) {
-    int index1 = findMarketIndex(graph, name1);
-    int index2 = findMarketIndex(graph, name2);
-
-    if (index1 != -1 && index2 != -1) {
-        graph->distances[index1][index2] = distance;
-        graph->distances[index2][index1] = distance;
-    } else {
-        printf("Invalid market names for distance calculation.\n");
-    }
-}
-
-int findMinDistance(const int* dist, const int* visited, int numMarkets) {
-    int minIndex = -1;
-    int minDist = INT_MAX;
-
-    for (int i = 0; i < numMarkets; ++i) {
-        if (!visited[i] && dist[i] < minDist) {
-            minDist = dist[i];
-            minIndex = i;
-        }
-    }
-
-    return minIndex;
-}
-
-void dijkstra(const MarketGraph* graph, const char* start, const char* end) {
-    int startIdx = findMarketIndex(graph, start);
-    int endIdx = findMarketIndex(graph, end);
-
-    if (startIdx == -1 || endIdx == -1) {
-        cout << "Invalid market names for Dijkstra's algorithm." << endl;
-        return;
-    }
-
-    int dist[MAX_MARKETS];
-    int visited[MAX_MARKETS];
-    int previous[MAX_MARKETS];
-
-    for (int i = 0; i < graph->numMarkets; ++i) {
-        dist[i] = INT_MAX;
-        visited[i] = 0;
-        previous[i] = -1;
-    }
-
-    dist[startIdx] = 0;
-
-    for (int count = 0; count < graph->numMarkets; ++count) {
-        int u = findMinDistance(dist, visited, graph->numMarkets);
-        visited[u] = 1;
-
-        for (int v = 0; v < graph->numMarkets; ++v) {
-            if (!visited[v] && graph->distances[u][v] && dist[u] != INT_MAX
-                && dist[u] + graph->distances[u][v] < dist[v]) {
-                dist[v] = dist[u] + graph->distances[u][v];
-                previous[v] = u;
-            }
-        }
-    }
-
-    cout << "Shortest path from " << start << " to " << end << ": ";
-    if (dist[endIdx] == INT_MAX) {
-        cout << "No path found." << endl;
-        return;
-    }
-
-    int current = endIdx;
-    vector<int> path;
-    while (current != -1) {
-        path.push_back(current);
-        current = previous[current];
-    }
-
-    for (int i = path.size() - 1; i >= 0; --i) {
-        cout << graph->markets[path[i]].name;
-        if (i > 0) {
-            cout << " <- ";
-        }
-    }
-    cout << endl;
-}
-
-void printGraph(const MarketGraph* graph) {
-    cout << "Market Graph:" << endl;
-
-    cout << "Markets: ";
-    for (int i = 0; i < graph->numMarkets; ++i) {
-        cout << graph->markets[i].name << " ";
-    }
-    cout << endl;
-
-    cout << "Distances:" << endl;
-    for (int i = 0; i < graph->numMarkets; ++i) {
-        for (int j = 0; j < graph->numMarkets; ++j) {
-            cout << graph->distances[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
-
-bool readMarketDataFromJson(const string& filename, MarketGraph& marketGraph) {
+bool readNationDataFromJson(const string& filename, Graph& nationGraph) {
     Json::CharReaderBuilder reader;
     Json::Value root;
 
@@ -132,31 +32,138 @@ bool readMarketDataFromJson(const string& filename, MarketGraph& marketGraph) {
     Json::parseFromStream(reader, file, &root, nullptr);
 
     // Check if the required fields are present
-    if (!root.isMember("markets") || !root.isMember("distances")) {
-        cerr << "Invalid JSON format. Missing 'markets' or 'distances' field." << endl;
+    if (!root.isMember("Nations") || !root.isMember("distances") || !root.isMember("Ally")) {
+        cerr << "Invalid JSON format. Missing 'Nations', 'distances', or 'Ally' field." << endl;
         return false;
     }
 
-    // Read markets
-    Json::Value marketsJson = root["markets"];
-    for (const auto& market : marketsJson) {
-        if (!market.isMember("name")) {
-            cerr << "Invalid JSON format. Missing 'name' field for a market." << endl;
+    // Read nations
+    Json::Value nationsJson = root["Nations"];
+    for (auto& nation : nationsJson) {
+        if (!nation.isMember("country") || !nation.isMember("name")) {
+            cerr << "Invalid JSON format. Missing 'country' or 'name' field for a nation." << endl;
             return false;
         }
-        const string name = market["name"].asString();
-        addMarket(&marketGraph, name.c_str());
+        string country = nation["country"].asString();
+        string name = nation["name"].asString();
+        addNation(&nationGraph, country, name);
     }
 
     // Read distances
     Json::Value distancesJson = root["distances"];
-    for (int i = 0; i < marketGraph.numMarkets; ++i) {
-        for (int j = 0; j < marketGraph.numMarkets; ++j) {
-            if (!distancesJson[i][j].isNull()) {
-                addDistance(&marketGraph, marketGraph.markets[i].name, marketGraph.markets[j].name, distancesJson[i][j].asInt());
-            }
+    for (int i = 0; i < nationGraph.index; ++i) {
+        for (int j = 0; j < nationGraph.index; ++j) {
+            nationGraph.distances[i][j] = distancesJson[i][j].asInt();
+        }
+    }
+
+    // Read allies
+    Json::Value alliesJson = root["Ally"];
+    for (int i = 0; i < nationGraph.index; ++i) {
+        for (int j = 0; j < nationGraph.index; ++j) {
+            nationGraph.allies[i][j] = alliesJson[i][j].asInt();
         }
     }
 
     return true;
+}
+
+int findMinDistance(int* dist, set<int>& visited) {
+    int minIndex = -1;
+    int minDist = MARK;
+
+    for (int i = 0; i < MAX; ++i) {
+        if (visited.find(i) == visited.end() && dist[i] < minDist) {
+            minDist = dist[i];
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+void dijkstra(Graph* graph, const string& start, const string& end) {
+    int startIdx = findNationIndex(graph, start);
+    int endIdx = findNationIndex(graph, end);
+
+    if (startIdx == -1 || endIdx == -1) {
+        cout << "Invalid nation names for Dijkstra's algorithm." << endl;
+        return;
+    }
+
+    int dist[MAX];
+    set<int> visited;
+    int previous[MAX];
+
+    for (int i = 0; i < MAX; ++i) {
+        dist[i] = MARK;
+        previous[i] = -1;
+    }
+
+    dist[startIdx] = 0;
+
+    for (int count = 0; count < MAX; ++count) {
+        int u = findMinDistance(dist, visited);
+        visited.insert(u);
+
+        for (int v = 0; v < MAX; ++v) {
+            if (visited.find(v) == visited.end() && graph->distances[u][v] != 0
+                && dist[u] != MARK) {
+                
+                // Check if v is an enemy, and u is an ally of v
+                if (graph->allies[u][v] == 1 && dist[u] + graph->distances[u][v] < dist[v]) {
+                    dist[v] = dist[u] + graph->distances[u][v];
+                    previous[v] = u;
+                }
+            }
+        }
+    }
+
+    cout << endl << "Shortest path from " << graph->nations[startIdx].name << " to " << graph->nations[endIdx].name << ": " << endl << endl;
+    if (dist[endIdx] == MARK) {
+        cout << "No path found." << endl << endl;
+        return;
+    }
+
+    int current = endIdx;
+    vector<int> path;
+    while (current != -1) {
+        path.push_back(current);
+        current = previous[current];
+    }
+
+    int totalDistance = 0;
+    for (int i = path.size() - 1; i >= 0; --i) {
+        cout << graph->nations[path[i]].country;
+        if (i > 0) {
+            cout << " --> ";
+            totalDistance += graph->distances[path[i-1]][path[i]];
+        }
+    }
+    cout << endl << endl << "Total Distance: " << totalDistance << endl;
+    cout << "Total Reward: " << graph->distances[startIdx][endIdx] << endl << endl;    
+}
+
+
+void printGraph(Graph* graph) {
+    cout << endl << "Nations List:" << endl;
+    for (int i = 0; i < graph->index; ++i) {
+        cout << "Country: " << setw(12) << left << graph->nations[i].country
+             << "Name: " << graph->nations[i].name << endl;
+    }
+
+    // cout << endl << "Distances:" << endl;
+    // for (int i = 0; i < graph->index; ++i) {
+    //     for (int j = 0; j < graph->index; ++j) {
+    //         cout << graph->distances[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    // cout << endl << "Allies:" << endl;
+    // for (int i = 0; i < graph->index; ++i) {
+    //     for (int j = 0; j < graph->index; ++j) {
+    //         cout << graph->allies[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
 }
