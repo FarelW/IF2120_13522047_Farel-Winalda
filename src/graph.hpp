@@ -1,19 +1,13 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
-#include <iostream>
-#include <unordered_map>
-#include <set>
-#include <fstream>
 #include <json/json.h>
-#include <climits>
-#include <iomanip>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
 #define MAX 8
-#define MARK INT_MAX
+#define MARK 9999
 
 struct Nation {
     string country;
@@ -27,9 +21,11 @@ struct Graph {
     int index;
 };
 
-int findNationIndex(Graph* graph, const string& name);
+void addNation(Graph* graph, string& country, string& name);
 
 bool readNationDataFromJson(const string& filename, Graph& nationGraph);
+
+int findNationIndex(Graph* graph, const string& name);
 
 void dijkstra(Graph* graph, const string& start, const string& end);
 
