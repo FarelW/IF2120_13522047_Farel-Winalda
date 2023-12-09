@@ -1,0 +1,34 @@
+{
+    "Nations": [
+        { "country": "Britains", "name":"Farel W" },
+        { "country": "Frank", "name":"Philip II Augustus" },
+        { "country": "Goths" , "name":"King Euric the Visigoth"},
+        { "country": "Teutons" , "name":"Frederick Barbarossa"},
+        { "country": "Japanese" , "name":"Imagawa Yoshimoto"},
+        { "country": "Chinese" , "name":"Yue Fei"},
+        { "country": "Byzantines" , "name":"General Manuel Comnenus"},
+        { "country": "Persians" , "name":"Emp. Hormizd"}
+    ],
+
+    "distances": [
+        [0, 3, 79, 23, 36, 83, 50, 102],
+        [3, 0, 67, 30, 27, 77, 55, 102],
+        [79, 67, 0, 82, 15, 16, 62, 49],
+        [23, 30, 82, 0, 52, 63, 15, 59],
+        [36, 27, 15, 52, 0, 31, 52, 64],
+        [83, 77, 16, 63, 31, 0, 32, 14],
+        [50, 55, 62, 15, 52, 32, 0, 22],
+        [102, 102, 49, 59, 64, 14, 22, 0]
+    ],
+    
+    "Ally":[
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 1, 1, 1, 1, 1],
+        [0, 1, 0, 1, 1, 1, 1, 1],
+        [0, 1, 1, 0, 1, 1, 1, 1],
+        [0, 1, 1, 1, 0, 1, 1, 1],
+        [0, 1, 1, 1, 1, 0, 1, 1],
+        [0, 1, 1, 1, 1, 1, 0, 1],
+        [0, 1, 1, 1, 1, 1, 1, 0]
+    ]
+}
