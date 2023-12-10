@@ -1,7 +1,7 @@
-<h1 align="center">Tugas Makalah IF2120 Matematika Diskrit</h1>
-<h3 align="center">Kelas 01 IF-G</h3>
+<h1 align="center">Application of Djikstra Algorithm for gold trading and war strategy in Age of Empires II Game</h1>
+<h2 align="center">Tugas Makalah IF2120 Matematika Diskrit</h2>
 <p align="center"></p>
-<p align="center">Application of Djikstra Algorithm for gold trading and war strategy in Age of Empires II Game</p>
+<h3 align="center">Kelas 01 IF-G</h3>
 <p align="center">Semester ganjil Tahun 2023/2024</p>
 
 ## Table of Contents
@@ -10,26 +10,28 @@
 - [Built With](#built-with)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Features](#features)
 - [File Structures](#file-structures)
 - [About](#about)
 
 
 ## Overview
-<!-- 
-![screenshot](https://github.com/Filbert88/TUBES-ALGEO-1/blob/d5e8925fdf81671e12d005604ece903d557ed92d/Apau%20%26%20Apin.jpg) -->
 
-<!-- Here is the purpose of making this project :
-- Create a library (library or package) in Java to find SPL solutions using the Gauss elimination method, Gauss-Jordan elimination method, inverse matrix method, and Cramer's rule (Cramer's rule specifically for SPL with n variables and n equations), calculating the matrix determinant using row reduction and with cofactor expansion, and calculating matrix inverses.
-- Solve various problems in SPL form, solve interpolation and linear regression problems, calculate inverse matrices, calculate matrix determinants using various methods (row reduction and cofactor expansion). -->
+![screenshot](https://m.media-amazon.com/images/M/MV5BZmQ4ZDRmOWUtY2Y4YS00NWZjLWEwNjctYjU0NmIwYjVlNDQxXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg)
+
+
+<p align="justify">
+<strong>Age of Empires II: HD Edition</strong>is a game that revolves around the theme of warfare between nations. Each nation can construct buildings, create citizens and warriors by exchanging four main resources: wood, food, gold, and stone. Players have the option to form alliances with any nation. As time progresses, the available resources become scarce, making essential resources such as wood, food, and stone increasingly rare, while gold remains the same. Gold can be used for trading and serves as the currency for interactions between nations, whether they be allies or enemies. However, trade routes passing through ally territories are the only safe pathways for this commerce. Such trade is vital for sustaining our nation and preventing the downfall of our nation. This research discusses the planning of trade routes between nations, selecting the shortest route with the highest profit, using the <strong><i>Dijkstra algorithm</i></strong> implemented in a C++ program.
+</p>
 
 ### Built With
 - [C++ Programming Language](https://www.w3schools.com/cpp/default.asp)
 
+
 ## Prerequisites
 
-List any prerequisites that are required to run your Java program. For example:
+List any prerequisites that are required to run this program:
 - g++ 10.0.0 or higher
+
 
 ## Installation
 
@@ -37,38 +39,65 @@ If you want to run this program you will need to set up
 
 1. Clone this repository :
 ```shell
-git clone https://github.com/FarelW/Matematika-Diskrit
+git clone https://github.com/FarelW/IF2120_13522047_Farel-Winalda
 ```
 
-2. Build / Compile java program :
+2. Build / Compile program :
 ```shell
 make
 ```
-Or you can just double click Build file in first directory
 
 3. Run the program :
 ```shell
 ./main
 ```
 
-## Features
-
-<!-- Here is the purpose of making this project :
-* The program contains of menu options (SPL, Determinant, Inverse, Interpolation Polynomial,Bicubic Spline Interpolation, and Regression)
-* The program can receive input either from the keyboard (terminal) or read input from text files.
-* Step by step how to get the answer
-* File output (file.txt)
-* Each menu contains various problem solving methods
-* Each function contains multiple error handling method to ensure greatest experience for the user. -->
 
 ## File Structures
 
+```
+IF2120_13522047_Farel-Winalda
+|
+├─── bin
+|    | 
+|    ├─── graph.o
+|    | 
+|    └─── main.o
+|
+├─── docs
+|    | 
+|    └─── IF2120_13522047_Farel Winalda.pdf
+|
+├─── src
+|    | 
+|    ├─── graph.cpp
+|    | 
+|    └─── graph.hpp
+|
+├─── test
+|    | 
+|    ├─── data.json
+|    | 
+|    ├─── studi1.json
+|    | 
+|    ├─── studi2.json
+|    | 
+|    ├─── studi3.json
+|    | 
+|    └─── studi4.hpp
+|
+├─── main.cpp
+|
+├─── Makefile
+|
+└─── README.md       
+```
+
 This repo contains of 4 folders such as :
-<!-- - bin : contains of java executable file .class that has been compiled from the src folder -->
-- src : contains of main program source code .java 
-- doc : contain of our assignment report
-<!-- - test : contains of study cases problems that can be used as an input in the program.
-- output : contains of output .txt file based on users   -->
+- bin       : contains of compiled source file and main file as a binary
+- docs      : contains of the report of this research
+- src       : contains of source file / function and header file / data structure
+- test      : contains of data input file and study case files
 
 ## About
 
