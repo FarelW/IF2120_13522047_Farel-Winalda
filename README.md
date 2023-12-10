@@ -1,13 +1,12 @@
 <h1 align="center">Application of Djikstra Algorithm for gold trading and war strategy in Age of Empires II Game</h1>
-<h2 align="center">Tugas Makalah IF2120 Matematika Diskrit</h2>
-<p align="center"></p>
+<h3 align="center">Tugas Makalah IF2120 Matematika Diskrit</h3>
 <h3 align="center">Kelas 01 IF-G</h3>
 <p align="center">Semester ganjil Tahun 2023/2024</p>
 
 ## Table of Contents
 
 - [Overview](#overview)
-- [Built With](#built-with)
+    - [Built With](#built-with)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [File Structures](#file-structures)
@@ -20,7 +19,7 @@
 
 
 <p align="justify">
-<strong>Age of Empires II: HD Edition</strong>is a game that revolves around the theme of warfare between nations. Each nation can construct buildings, create citizens and warriors by exchanging four main resources: wood, food, gold, and stone. Players have the option to form alliances with any nation. As time progresses, the available resources become scarce, making essential resources such as wood, food, and stone increasingly rare, while gold remains the same. Gold can be used for trading and serves as the currency for interactions between nations, whether they be allies or enemies. However, trade routes passing through ally territories are the only safe pathways for this commerce. Such trade is vital for sustaining our nation and preventing the downfall of our nation. This research discusses the planning of trade routes between nations, selecting the shortest route with the highest profit, using the <strong><i>Dijkstra algorithm</i></strong> implemented in a C++ program.
+<strong>Age of Empires II: HD Edition</strong> is a game that revolves around the theme of warfare between nations. Each nation can construct buildings, create citizens and warriors by exchanging four main resources: wood, food, gold, and stone. Players have the option to form alliances with any nation. As time progresses, the available resources become scarce, making essential resources such as wood, food, and stone increasingly rare, while gold remains the same. Gold can be used for trading and serves as the currency for interactions between nations, whether they be allies or enemies. However, trade routes passing through ally territories are the only safe pathways for this commerce. Such trade is vital for sustaining our nation and preventing the downfall of our nation. This research discusses the planning of trade routes between nations, selecting the shortest route with the highest profit, using the <strong><i>Dijkstra algorithm</i></strong> implemented in a C++ program.
 </p>
 
 ### Built With
